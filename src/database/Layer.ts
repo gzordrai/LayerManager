@@ -3,10 +3,12 @@ import { IJsonLayer } from "./json";
 export class Layer {
     private name: string;
     private locked: boolean;
+    private lockerId: string;
 
-    public constructor(name: string, locked: boolean) {
+    public constructor(name: string, locked: boolean = false, lockerId: string = "") {
         this.name = name;
         this.locked = locked;
+        this.lockerId = lockerId;
     }
 
     /**
@@ -49,6 +51,6 @@ export class Layer {
      * @returns {IJsonLayer} The layer's data as a JSON object.
      */
     public toJSON(): IJsonLayer {
-        return { locked: this.locked };
+        return { locked: this.locked, lockerId: this.lockerId };
     }
 }

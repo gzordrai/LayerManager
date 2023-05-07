@@ -1,3 +1,4 @@
 export interface IJsonLayer {
-    locked: boolean
+    locked: boolean;
+    lockerId: string;
 }
