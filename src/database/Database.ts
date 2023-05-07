@@ -9,9 +9,11 @@ export class Database {
     /**
      * Adds a layer to the database
      * 
-     * @param layer The layer to add
+     * @param name The layer name to add
      */
-    public static async addLayer(layer: Layer): Promise<void> {
+    public static async addLayer(name: string): Promise<void> {
+        const layer: Layer = new Layer(name, false);
+
         await Database.save(layer);
     }
 
