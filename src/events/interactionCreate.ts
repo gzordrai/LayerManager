@@ -9,8 +9,10 @@ const event: IEvent = {
         if (interaction.inCachedGuild()) {
             if (interaction.isAutocomplete())
                 await handleAutocomplete(client, interaction);
-            else if (interaction.isChatInputCommand())
+            else if (interaction.isChatInputCommand()) {
+                await interaction.deferReply({ ephemeral: true });
                 await handleSlashCommand(client, interaction);
+            }
         }
     },
 };
