@@ -38,6 +38,15 @@ export class Layer {
     }
 
     /**
+     * Set the locker id of the layer
+     * 
+     * @param id The locker id
+     */
+    public setLockerId(id: string): void {
+        this.lockerId = id;
+    }
+
+    /**
      * Returns the name of the layer.
      * 
      * @returns {string} The name of the layer.

@@ -31,6 +31,7 @@ export const command: ICommand = {
 
             if (!layer.islocked()) {
                 layer.lock();
+                layer.setLockerId(interaction.user.id);
 
                 await Database.save(layer);
                 await interaction.followUp({ content: "The layer has been locked" });
