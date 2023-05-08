@@ -12,6 +12,17 @@ export const command: ICommand = {
                 .setAutocomplete(true)
                 .setRequired(true)
         ),
+    async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
+        const choices: Array<Layer> = await Database.getAll();
+        let ret: Array<ApplicationCommandOptionChoiceData<string | number>> = new Array<ApplicationCommandOptionChoiceData<string | number>>();
+
+        choices.forEach((layer: Layer) => {
+            if (!layer.islocked())
+                ret.push({ name: layer.getName(), value: layer.getName() });
+        });
+
+        await interaction.respond(ret);
+    },
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const name: string = interaction.options.getString("name", true);
 
