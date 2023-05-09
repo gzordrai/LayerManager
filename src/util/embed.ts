@@ -10,7 +10,7 @@ export const createLayersEmbed = (guild: Guild, layers: Array<Layer>): EmbedBuil
     for (let i = 0; i < 25 && i < layers.length; i++) {
         const layer: Layer = layers[i];
 
-        if (layer.islocked())
+        if (!layer.islocked())
             embed.addFields({ name: `🟢 - ${layer.getName()}`, value: "Ready to use" });
         else
             embed.addFields({ name: `🔴 - ${layer.getName()}`, value: `Locked by ${guild.members.cache.get(layer.getLockerId())?.user}` })
