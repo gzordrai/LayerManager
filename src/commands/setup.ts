@@ -1,5 +1,5 @@
 import { ChannelType, ChatInputCommandInteraction, EmbedBuilder, Message, SlashCommandBuilder, TextChannel } from "discord.js";
-import { ICommand } from "../bot";
+import { ExtendedClient, ICommand } from "../bot";
 import { readFile, writeFileSync } from "fs";
 import { createLayersEmbed } from "../util/embed";
 import { Database } from "../database";
@@ -15,7 +15,7 @@ export const command: ICommand = {
                 .setRequired(true)
         ),
     ephemeral: false,
-    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
         const channel: TextChannel = interaction.options.getChannel("channel", true, [ChannelType.GuildText]);
         const embed: EmbedBuilder = createLayersEmbed(interaction.guild!, await Database.getAll());
 
@@ -34,6 +34,7 @@ export const command: ICommand = {
 
                     config.channel = channel.id;
                     config.message = message.id;
+                    client.layersEmbed = message;
 
                     writeFileSync(pth, JSON.stringify(config));
                 } catch (err) {

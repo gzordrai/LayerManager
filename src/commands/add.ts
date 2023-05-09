@@ -1,5 +1,5 @@
 import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import { ICommand } from "../bot";
+import { ExtendedClient, ICommand } from "../bot";
 import { Database } from "../database";
 
 export const command: ICommand = {
@@ -12,7 +12,7 @@ export const command: ICommand = {
                 .setRequired(true)
         ),
     ephemeral: true,
-    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<void> {
         const name: string = interaction.options.getString("name", true);
 
         if ((await Database.count()) <= parseInt(process.env.MAX_LAYER!)) {

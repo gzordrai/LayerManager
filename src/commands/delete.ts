@@ -1,5 +1,5 @@
 import { ApplicationCommandOptionChoiceData, AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
-import { ICommand } from "../bot";
+import { ExtendedClient, ICommand } from "../bot";
 import { Database, Layer } from "../database";
 
 export const command: ICommand = {
@@ -24,7 +24,7 @@ export const command: ICommand = {
 
         await interaction.respond(ret);
     },
-    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<void> {
         const name: string = interaction.options.getString("name", true);
 
         if (await Database.has(name)) {

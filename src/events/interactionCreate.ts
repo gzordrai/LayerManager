@@ -1,6 +1,8 @@
 import { Events, Interaction } from "discord.js";
 import { ExtendedClient, ICommand, IEvent } from "../bot";
 import { handleAutocomplete, handleSlashCommand } from "../handlers"
+import { createLayersEmbed } from "../util/embed";
+import { Database } from "../database";
 
 const event: IEvent = {
     name: Events.InteractionCreate,
@@ -13,7 +15,10 @@ const event: IEvent = {
                 const command: ICommand = client.commands.get(interaction.commandName)!;
 
                 await interaction.deferReply({ ephemeral: command.ephemeral });
-                await handleSlashCommand(command, interaction);
+                await handleSlashCommand(client, command, interaction);
+
+                if (client.layersEmbed != null)
+                    client.layersEmbed.edit({ embeds: [createLayersEmbed(interaction.guild, await Database.getAll())] });
             }
         }
     },
