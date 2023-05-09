@@ -56,6 +56,15 @@ export class Layer {
     }
 
     /**
+     * Returns the id of the locker
+     * 
+     * @returns {string} The locker id
+     */
+    public getLockerId(): string {
+        return this.lockerId;
+    }
+
+    /**
      * Returns a JSON representation of the layer.
      * @returns {IJsonLayer} The layer's data as a JSON object.
      */
