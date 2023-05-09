@@ -5,6 +5,7 @@ export const command: ICommand = {
     data: new SlashCommandBuilder()
         .setName("git")
         .setDescription("Le dépot github du bot"),
+    ephemeral: true,
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const embed: EmbedBuilder = new EmbedBuilder();
 

@@ -11,6 +11,7 @@ export const command: ICommand = {
                 .setDescription("The layer name")
                 .setRequired(true)
         ),
+    ephemeral: true,
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const name: string = interaction.options.getString("name", true);
 

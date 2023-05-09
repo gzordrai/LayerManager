@@ -14,6 +14,7 @@ export const command: ICommand = {
                 .setDescription("The channel where the list of layers will be found")
                 .setRequired(true)
         ),
+    ephemeral: false,
     async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const channel: TextChannel = interaction.options.getChannel("channel", true, [ChannelType.GuildText]);
         const embed: EmbedBuilder = createLayersEmbed(interaction.guild!, await Database.getAll());

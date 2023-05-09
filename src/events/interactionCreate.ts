@@ -1,5 +1,5 @@
 import { Events, Interaction } from "discord.js";
-import { ExtendedClient, IEvent } from "../bot";
+import { ExtendedClient, ICommand, IEvent } from "../bot";
 import { handleAutocomplete, handleSlashCommand } from "../handlers"
 
 const event: IEvent = {
@@ -10,8 +10,10 @@ const event: IEvent = {
             if (interaction.isAutocomplete())
                 await handleAutocomplete(client, interaction);
             else if (interaction.isChatInputCommand()) {
-                await interaction.deferReply({ ephemeral: true });
-                await handleSlashCommand(client, interaction);
+                const command: ICommand = client.commands.get(interaction.commandName)!;
+
+                await interaction.deferReply({ ephemeral: command.ephemeral });
+                await handleSlashCommand(command, interaction);
             }
         }
     },
