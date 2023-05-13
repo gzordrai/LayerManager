@@ -1,6 +1,6 @@
 {
   "name": "layermanager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Discord bot that manages access to unreal engine layers",
   "main": "./src/index.ts",
   "repository": "https://github.com/gzordrai/LayerManager.git",
