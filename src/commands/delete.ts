@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionChoiceData, AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ApplicationCommandOptionChoiceData, AutocompleteInteraction, ChatInputCommandInteraction, Message, SlashCommandBuilder } from "discord.js";
 import { ExtendedClient, ICommand } from "../bot";
 import { Database, Layer } from "../database";
 
@@ -24,18 +24,21 @@ export const command: ICommand = {
 
         await interaction.respond(ret);
     },
-    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<Message<boolean>> {
         const name: string = interaction.options.getString("name", true);
+        let response: string;
 
         if (await Database.has(name)) {
             if (!(await Database.getLayer(name)).islocked()) {
                 await Database.removeLayer(name);
 
-                await interaction.followUp({ content: "Layer deleted successfully", ephemeral: true });
+                response = "Layer deleted successfully";
             } else
-                await interaction.followUp({ content: "The layer is locked", ephemeral: true });
+            response="The layer is locked";
         } else
-            await interaction.followUp({ content: "There is no layer with this name", ephemeral: true });
+            response = "There is no layer with this name";
+
+        return await interaction.followUp({ content: response, ephemeral: this.ephemeral });
     }
 }
 

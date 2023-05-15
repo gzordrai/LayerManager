@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, Message, SlashCommandBuilder } from "discord.js";
 import { ExtendedClient, ICommand } from "../bot";
 import { Database } from "../database";
 
@@ -12,19 +12,22 @@ export const command: ICommand = {
                 .setRequired(true)
         ),
     ephemeral: true,
-    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<Message<boolean>> {
         const name: string = interaction.options.getString("name", true);
+        let response: string;
 
         if ((await Database.count()) <= parseInt(process.env.MAX_LAYER!)) {
             if (await Database.has(name))
-                await interaction.followUp({ content: "There is already a layer with this name", ephemeral: true });
+                response = "There is already a layer with this name";
             else {
                 await Database.addLayer(name);
 
-                await interaction.followUp({ content: "Layer added successfully", ephemeral: true });
+                response = "Layer added successfully";
             }
         } else
-            await interaction.followUp({ content: "Maximum number of layers reached", ephemeral: true });
+            response = "Maximum number of layers reached";
+
+        return await interaction.followUp({ content: response, ephemeral: this.ephemeral });
     }
 }
 

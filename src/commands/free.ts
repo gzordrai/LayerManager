@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionChoiceData, AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ApplicationCommandOptionChoiceData, AutocompleteInteraction, ChatInputCommandInteraction, Message, SlashCommandBuilder } from "discord.js";
 import { ExtendedClient, ICommand } from "../bot";
 import { Database, Layer } from "../database";
 
@@ -34,8 +34,9 @@ export const command: ICommand = {
 
         await interaction.respond(ret);
     },
-    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<Message<boolean>> {
         const subcommand: string = interaction.options.getSubcommand(true);
+        let response: string;
 
         switch(subcommand) {
             case "all":
@@ -46,7 +47,7 @@ export const command: ICommand = {
                     await Database.save(layer);
                 })
 
-                await interaction.followUp({ content: "All layers have been unlock" });
+                response = "All layers have been unlock";
                 break;
             case "layer":
                 const name: string = interaction.options.getString("name", true);
@@ -60,13 +61,17 @@ export const command: ICommand = {
                         layer.setLockerId("");
 
                         await Database.save(layer);
-                        await interaction.followUp({ content: "The layer has been unlocked" });
+                        response = "The layer has been unlocked";
                     } else
-                        await interaction.followUp({ content: "This layer is not lock" });
+                    response = "This layer is not lock";
                 } else
-                    await interaction.followUp({ content: "There is no layer with this name" });
+                    response = "There is no layer with this name";
                 break;
+            default:
+                response = "Subcommand not found";
         }
+
+        return await interaction.followUp({ content: response, ephemeral: this.ephemeral });
     }
 }
 

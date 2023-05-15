@@ -16,33 +16,33 @@ export const command: ICommand = {
                 .setRequired(true)
         ),
     ephemeral: false,
-    async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<Message<boolean>> {
         const channel: TextChannel = interaction.options.getChannel("channel", true, [ChannelType.GuildText]);
         const embed: EmbedBuilder = createLayersEmbed(interaction.guild!, await Database.getAll());
 
-        interaction.followUp({ embeds: [embed] })
-        .then((message: Message) => {
-            const pth: string = path.join(__dirname, "../../conf/config.json");
+        const message: Message = await interaction.followUp({ embeds: [embed], ephemeral: this.ephemeral });
+        const pth: string = path.join(__dirname, "../../conf/config.json");
 
-            readFile(pth, "utf8", (error, data: string) => {
-                if (error) {
-                    console.log(error);
-                    return;
-                }
+        readFile(pth, "utf8", (error, data: string) => {
+            if (error) {
+                console.log(error);
+                return;
+            }
 
-                try {
-                    const config: any = JSON.parse(data);
+            try {
+                const config: any = JSON.parse(data);
 
-                    config.channel = channel.id;
-                    config.message = message.id;
-                    client.layersEmbed = message;
+                config.channel = channel.id;
+                config.message = message.id;
+                client.layersEmbed = message;
 
-                    writeFileSync(pth, JSON.stringify(config));
-                } catch (err) {
-                    console.log(err);
-                }
-            })
+                writeFileSync(pth, JSON.stringify(config));
+            } catch (err) {
+                console.log(err);
+            }
         })
+
+        return message;
     }
 }
 
