@@ -12,6 +12,7 @@ export const command: ICommand = {
                 .setRequired(true)
         ),
     ephemeral: true,
+    autoDelete: true,
     async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<Message<boolean>> {
         const name: string = interaction.options.getString("name", true);
         let response: string;

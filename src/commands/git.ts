@@ -6,6 +6,7 @@ export const command: ICommand = {
         .setName("git")
         .setDescription("Le dépot github du bot"),
     ephemeral: true,
+    autoDelete: false,
     async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<Message<boolean>> {
         const embed: EmbedBuilder = new EmbedBuilder();
 

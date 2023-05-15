@@ -4,6 +4,7 @@ import { ExtendedClient } from "./ExtendedClient";
 export interface ICommand {
     data: SlashCommandBuilder | Omit<SlashCommandBuilder, "addSubcommand" | "addSubcommandGroup"> | SlashCommandSubcommandsOnlyBuilder;
     ephemeral: boolean;
+    autoDelete: boolean;
     autocomplete?: (interaction: AutocompleteInteraction) => Promise<void>;
     execute: ((interaction: ChatInputCommandInteraction, client: ExtendedClient) => Promise<Message<boolean>>);
 }

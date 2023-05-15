@@ -23,6 +23,7 @@ export const command: ICommand = {
                 .setDescription("Unlock all layers")
         ),
     ephemeral: true,
+    autoDelete: true,
     async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
         const choices: Array<Layer> = await Database.getAll();
         let ret: Array<ApplicationCommandOptionChoiceData<string | number>> = new Array<ApplicationCommandOptionChoiceData<string | number>>();
