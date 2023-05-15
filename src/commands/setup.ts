@@ -16,7 +16,7 @@ export const command: ICommand = {
                 .setRequired(true)
         ),
     ephemeral: false,
-    autoDelete: true,
+    autoDelete: false,
     async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<Message<boolean>> {
         const channel: TextChannel = interaction.options.getChannel("channel", true, [ChannelType.GuildText]);
         const embed: EmbedBuilder = createLayersEmbed(interaction.guild!, await Database.getAll());
