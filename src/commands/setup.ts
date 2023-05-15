@@ -12,6 +12,7 @@ export const command: ICommand = {
         .addChannelOption(option =>
             option.setName("channel")
                 .setDescription("The channel where the list of layers will be found")
+                .addChannelTypes(ChannelType.GuildText)
                 .setRequired(true)
         ),
     ephemeral: false,
