@@ -13,6 +13,7 @@ export const command: ICommand = {
                 .setRequired(true)
         ),
     ephemeral: true,
+    autoDelete: true,
     async autocomplete(interaction: AutocompleteInteraction): Promise<void> {
         const choices: Array<Layer> = await Database.getAll();
         let ret: Array<ApplicationCommandOptionChoiceData<string | number>> = new Array<ApplicationCommandOptionChoiceData<string | number>>();
