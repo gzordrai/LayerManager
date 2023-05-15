@@ -1,13 +1,14 @@
-import { ChatInputCommandInteraction, Message } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 import { ExtendedClient, ICommand } from "../bot";
-import { delayedMessageRemoval } from "../util/delayedMessageRemoval";
+import { delayedInteractionRemoval } from "../util/delayedMessageRemoval";
 
 export const handleSlashCommand = async (client: ExtendedClient, command: ICommand, interaction: ChatInputCommandInteraction): Promise<void> => {
     try {
-        const message: Message = await command.execute(interaction, client);
+        await command.execute(interaction, client);
 
         if (command.autoDelete)
-            await delayedMessageRemoval(message);
+            delayedInteractionRemoval(interaction);
+
     } catch (error) {
         console.log(error);
 

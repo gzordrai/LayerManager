@@ -1,8 +1,8 @@
-import { Message } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 
 const delay: number = 2000;
 
-export const delayedMessageRemoval = async (message: Message): Promise<void> => {
+export const delayedInteractionRemoval = async (interaction: ChatInputCommandInteraction): Promise<void> => {
     await new Promise((resolve: (value: unknown) => void) => setTimeout(resolve, delay));
-    await message.delete();
+    await interaction.deleteReply();
 }
