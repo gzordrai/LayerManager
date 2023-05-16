@@ -1,9 +1,7 @@
-import { ChannelType, ChatInputCommandInteraction, EmbedBuilder, Message, SlashCommandBuilder, TextChannel } from "discord.js";
+import { ChannelType, ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, TextChannel } from "discord.js";
 import { ExtendedClient, ICommand } from "../bot";
-import { readFile, writeFileSync } from "fs";
 import { createLayersEmbed } from "../util/embed";
 import { Database } from "../database";
-import path from "path";
 
 export const command: ICommand = {
     data: new SlashCommandBuilder()
@@ -21,29 +19,13 @@ export const command: ICommand = {
         const channel: TextChannel | null = interaction.options.getChannel("channel", false, [ChannelType.GuildText]);
         const embed: EmbedBuilder = createLayersEmbed(interaction.guild!, await Database.getAll());
 
-        const message: Message = await interaction.followUp({ embeds: [embed], ephemeral: this.ephemeral });
-        const pth: string = path.join(__dirname, "../../conf/config.json");
-
-        if (client)
-            client.layersEmbed = message;
-
-        readFile(pth, "utf8", (error, data: string) => {
-            if (error) {
-                console.log(error);
-                return;
-            }
-
-            try {
-                const config: any = JSON.parse(data);
-
-                config.channel = channel.id;
-                config.message = message.id;
-
-                writeFileSync(pth, JSON.stringify(config));
-            } catch (err) {
-                console.log(err);
-            }
-        })
+        if (client) {
+            if (channel) {
+                client.layersEmbed = await channel.send({ embeds: [embed] });
+                await interaction.followUp({ content: `The display of the layers has been set in ${channel}`, ephemeral: true });
+            } else
+                client.layersEmbed = await interaction.followUp({ embeds: [embed], ephemeral: this.ephemeral });
+        }
     }
 }
 
