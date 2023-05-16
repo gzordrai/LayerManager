@@ -7,14 +7,14 @@ export const command: ICommand = {
         .setDescription("Le dépot github du bot"),
     ephemeral: true,
     autoDelete: false,
-    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<Message<boolean>> {
+    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<void> {
         const embed: EmbedBuilder = new EmbedBuilder();
 
         embed.setColor("Blue");
         embed.setTitle(interaction.client.user.username);
         embed.setURL("https://github.com/gzordrai/LayerManager");
 
-        return await interaction.followUp({ embeds: [embed], ephemeral: this.ephemeral });
+        await interaction.followUp({ embeds: [embed], ephemeral: this.ephemeral });
     }
 }
 

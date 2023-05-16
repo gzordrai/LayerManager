@@ -17,7 +17,7 @@ export const command: ICommand = {
         ),
     ephemeral: false,
     autoDelete: false,
-    async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<Message<boolean>> {
+    async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
         const channel: TextChannel = interaction.options.getChannel("channel", true, [ChannelType.GuildText]);
         const embed: EmbedBuilder = createLayersEmbed(interaction.guild!, await Database.getAll());
 
@@ -42,8 +42,6 @@ export const command: ICommand = {
                 console.log(err);
             }
         })
-
-        return message;
     }
 }
 
