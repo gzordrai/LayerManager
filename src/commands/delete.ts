@@ -25,7 +25,7 @@ export const command: ICommand = {
 
         await interaction.respond(ret);
     },
-    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const name: string = interaction.options.getString("name", true);
         let response: string;
 

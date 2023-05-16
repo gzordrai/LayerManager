@@ -17,12 +17,15 @@ export const command: ICommand = {
         ),
     ephemeral: false,
     autoDelete: false,
-    async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient | undefined): Promise<void> {
         const channel: TextChannel = interaction.options.getChannel("channel", true, [ChannelType.GuildText]);
         const embed: EmbedBuilder = createLayersEmbed(interaction.guild!, await Database.getAll());
 
         const message: Message = await interaction.followUp({ embeds: [embed], ephemeral: this.ephemeral });
         const pth: string = path.join(__dirname, "../../conf/config.json");
+
+        if (client)
+            client.layersEmbed = message;
 
         readFile(pth, "utf8", (error, data: string) => {
             if (error) {
@@ -35,7 +38,6 @@ export const command: ICommand = {
 
                 config.channel = channel.id;
                 config.message = message.id;
-                client.layersEmbed = message;
 
                 writeFileSync(pth, JSON.stringify(config));
             } catch (err) {

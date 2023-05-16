@@ -6,5 +6,5 @@ export interface ICommand {
     ephemeral: boolean;
     autoDelete: boolean;
     autocomplete?: (interaction: AutocompleteInteraction) => Promise<void>;
-    execute: (interaction: ChatInputCommandInteraction, client: ExtendedClient) => Promise<void>;
+    execute: (interaction: ChatInputCommandInteraction, client?: ExtendedClient) => Promise<void>;
 }

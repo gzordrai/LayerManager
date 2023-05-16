@@ -7,7 +7,7 @@ export const command: ICommand = {
         .setDescription("Le dépot github du bot"),
     ephemeral: true,
     autoDelete: false,
-    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const embed: EmbedBuilder = new EmbedBuilder();
 
         embed.setColor("Blue");

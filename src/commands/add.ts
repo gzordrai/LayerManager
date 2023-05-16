@@ -13,7 +13,7 @@ export const command: ICommand = {
         ),
     ephemeral: true,
     autoDelete: true,
-    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<void> {
+    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const name: string = interaction.options.getString("name", true);
         let response: string;
 
