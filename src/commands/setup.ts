@@ -13,12 +13,12 @@ export const command: ICommand = {
             option.setName("channel")
                 .setDescription("The channel where the list of layers will be found")
                 .addChannelTypes(ChannelType.GuildText)
-                .setRequired(true)
+                .setRequired(false)
         ),
     ephemeral: false,
     autoDelete: false,
     async execute(interaction: ChatInputCommandInteraction, client: ExtendedClient | undefined): Promise<void> {
-        const channel: TextChannel = interaction.options.getChannel("channel", true, [ChannelType.GuildText]);
+        const channel: TextChannel | null = interaction.options.getChannel("channel", false, [ChannelType.GuildText]);
         const embed: EmbedBuilder = createLayersEmbed(interaction.guild!, await Database.getAll());
 
         const message: Message = await interaction.followUp({ embeds: [embed], ephemeral: this.ephemeral });
