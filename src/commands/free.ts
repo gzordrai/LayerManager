@@ -35,7 +35,7 @@ export const command: ICommand = {
 
         await interaction.respond(ret);
     },
-    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<Message<boolean>> {
+    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const subcommand: string = interaction.options.getSubcommand(true);
         let response: string;
 
@@ -72,7 +72,7 @@ export const command: ICommand = {
                 response = "Subcommand not found";
         }
 
-        return await interaction.followUp({ content: response, ephemeral: this.ephemeral });
+        await interaction.followUp({ content: response, ephemeral: this.ephemeral });
     }
 }
 

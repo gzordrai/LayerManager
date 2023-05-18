@@ -13,7 +13,7 @@ export const command: ICommand = {
         ),
     ephemeral: true,
     autoDelete: true,
-    async execute(interaction: ChatInputCommandInteraction, _: ExtendedClient): Promise<Message<boolean>> {
+    async execute(interaction: ChatInputCommandInteraction): Promise<void> {
         const name: string = interaction.options.getString("name", true);
         let response: string;
 
@@ -28,7 +28,7 @@ export const command: ICommand = {
         } else
             response = "Maximum number of layers reached";
 
-        return await interaction.followUp({ content: response, ephemeral: this.ephemeral });
+        await interaction.followUp({ content: response, ephemeral: this.ephemeral });
     }
 }
 
