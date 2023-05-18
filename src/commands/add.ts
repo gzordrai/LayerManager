@@ -1,5 +1,5 @@
-import { ChatInputCommandInteraction, Message, SlashCommandBuilder } from "discord.js";
-import { ExtendedClient, ICommand } from "../bot";
+import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ICommand } from "../bot";
 import { Database } from "../database";
 
 export const command: ICommand = {
@@ -7,7 +7,8 @@ export const command: ICommand = {
         .setName("add")
         .setDescription("Add a new layer")
         .addStringOption(option =>
-            option.setName("name")
+            option
+                .setName("name")
                 .setDescription("The layer name")
                 .setRequired(true)
         ),

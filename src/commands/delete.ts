@@ -1,5 +1,5 @@
-import { ApplicationCommandOptionChoiceData, AutocompleteInteraction, ChatInputCommandInteraction, Message, SlashCommandBuilder } from "discord.js";
-import { ExtendedClient, ICommand } from "../bot";
+import { ApplicationCommandOptionChoiceData, AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ICommand } from "../bot";
 import { Database, Layer } from "../database";
 
 export const command: ICommand = {
@@ -7,7 +7,8 @@ export const command: ICommand = {
         .setName("delete")
         .setDescription("Delete a layer")
         .addStringOption(option =>
-            option.setName("name")
+            option
+                .setName("name")
                 .setDescription("The layer name")
                 .setAutocomplete(true)
                 .setRequired(true)

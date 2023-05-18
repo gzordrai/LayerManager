@@ -78,7 +78,6 @@ export class Database {
         return await Database.data.exists(`/${name}`);
     }
 
-
     /**
      * Saves a layer to the database
      * 

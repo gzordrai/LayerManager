@@ -1,5 +1,5 @@
-import { ApplicationCommandOptionChoiceData, AutocompleteInteraction, ChatInputCommandInteraction, Message, SlashCommandBuilder } from "discord.js";
-import { ExtendedClient, ICommand } from "../bot";
+import { ApplicationCommandOptionChoiceData, AutocompleteInteraction, ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ICommand } from "../bot";
 import { Database, Layer } from "../database";
 
 export const command: ICommand = {
@@ -11,7 +11,8 @@ export const command: ICommand = {
                 .setName("layer")
                 .setDescription("Unlock a layer")
                 .addStringOption(option =>
-                    option.setName("name")
+                    option
+                        .setName("name")
                         .setDescription("The layer name")
                         .setAutocomplete(true)
                         .setRequired(true)
@@ -46,13 +47,12 @@ export const command: ICommand = {
                 layers.forEach(async (layer: Layer) => {
                     layer.unlock();
                     await Database.save(layer);
-                })
+                });
 
                 response = "All layers have been unlock";
                 break;
             case "layer":
                 const name: string = interaction.options.getString("name", true);
-
 
                 if (await Database.has(name)) {
                     const layer: Layer = await Database.getLayer(name);
