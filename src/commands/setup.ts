@@ -1,6 +1,6 @@
 import { ChannelType, ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder, TextChannel } from "discord.js";
 import { ExtendedClient, ICommand } from "../bot";
-import { createLayersEmbed } from "../util/embed";
+import { createLayersEmbed } from "../util";
 import { Database } from "../database";
 
 export const command: ICommand = {

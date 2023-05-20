@@ -1,7 +1,7 @@
 import { Events, Interaction } from "discord.js";
 import { ExtendedClient, ICommand, IEvent } from "../bot";
 import { handleAutocomplete, handleSlashCommand } from "../handlers"
-import { createLayersEmbed } from "../util/embed";
+import { createLayersEmbed } from "../util";
 import { Database } from "../database";
 
 const event: IEvent = {
